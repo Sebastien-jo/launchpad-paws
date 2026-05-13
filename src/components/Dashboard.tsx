@@ -1,14 +1,11 @@
 import { useState } from "react";
 import {
   Bell,
-  Settings,
   Flame,
   Trophy,
   Dog as DogIcon,
   Plus,
   Search,
-  HelpCircle,
-  LogOut,
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -16,6 +13,7 @@ import { Input } from "@/components/ui/input";
 import { DogCard, type Dog } from "@/components/DogCard";
 import { StatTile } from "@/components/StatTile";
 import { FloatingPaws } from "@/components/FloatingPaws";
+import { BottomNav } from "@/components/BottomNav";
 import dogMax from "@/assets/dog-max.jpg";
 import dogLuna from "@/assets/dog-luna.jpg";
 import dogCharlie from "@/assets/dog-charlie.jpg";
