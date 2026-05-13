@@ -1,6 +1,5 @@
 import { useState } from "react";
 import {
-  Bell,
   Flame,
   Trophy,
   Dog as DogIcon,
