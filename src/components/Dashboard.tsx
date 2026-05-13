@@ -9,61 +9,18 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { DogCard, type Dog } from "@/components/DogCard";
+import { DogCard } from "@/components/DogCard";
 import { StatTile } from "@/components/StatTile";
 import { FloatingPaws } from "@/components/FloatingPaws";
 import { BottomNav } from "@/components/BottomNav";
-import dogMax from "@/assets/dog-max.jpg";
-import dogLuna from "@/assets/dog-luna.jpg";
-import dogCharlie from "@/assets/dog-charlie.jpg";
-
-const dogs: Dog[] = [
-  {
-    name: "Max",
-    breed: "Golden Retriever",
-    avatar: dogMax,
-    level: 3,
-    levelLabel: "Intermediate",
-    xp: 480,
-    xpMax: 600,
-    lastTrained: "2 days ago",
-    ready: true,
-    nextSession: "Today",
-    accent: "primary",
-  },
-  {
-    name: "Luna",
-    breed: "Siberian Husky",
-    avatar: dogLuna,
-    level: 1,
-    levelLabel: "Beginner",
-    xp: 90,
-    xpMax: 300,
-    lastTrained: "Yesterday",
-    ready: false,
-    nextSession: "in 2 days",
-    accent: "energy",
-  },
-  {
-    name: "Charlie",
-    breed: "Pembroke Corgi",
-    avatar: dogCharlie,
-    level: 2,
-    levelLabel: "Improving",
-    xp: 247,
-    xpMax: 450,
-    lastTrained: "Today",
-    ready: false,
-    nextSession: "Tomorrow",
-    accent: "trust",
-  },
-];
+import { useDogs } from "@/data/dogs-store";
 
 const filters = ["All Dogs", "Ready to Train", "Needs Attention"] as const;
 type Filter = (typeof filters)[number];
 
 export function Dashboard() {
   const [filter, setFilter] = useState<Filter>("All Dogs");
+  const dogs = useDogs();
 
   const filtered = dogs.filter((d) => {
     if (filter === "Ready to Train") return d.ready;
@@ -153,7 +110,7 @@ export function Dashboard() {
         {filtered.length > 0 ? (
           <section className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((d) => (
-              <DogCard key={d.name} dog={d} />
+              <DogCard key={d.id} dog={d} />
             ))}
           </section>
         ) : (

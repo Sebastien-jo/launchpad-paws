@@ -1,20 +1,29 @@
-import { MoreVertical, Clock, BarChart3, Sparkles } from "lucide-react";
+import { MoreVertical, Clock, BarChart3, Sparkles, Pencil, Trash2 } from "lucide-react";
+import { Link, useNavigate } from "@tanstack/react-router";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
+import type { Dog } from "@/data/dogs-store";
+import { dogsStore } from "@/data/dogs-store";
 
-export interface Dog {
-  name: string;
-  breed: string;
-  avatar: string;
-  level: number;
-  levelLabel: string;
-  xp: number;
-  xpMax: number;
-  lastTrained: string;
-  ready: boolean;
-  nextSession: string;
-  accent: "primary" | "energy" | "trust";
-}
+export type { Dog };
 
 const accentMap = {
   primary: "bg-primary",
@@ -24,14 +33,14 @@ const accentMap = {
 
 export function DogCard({ dog }: { dog: Dog }) {
   const pct = Math.round((dog.xp / dog.xpMax) * 100);
+  const navigate = useNavigate();
+  const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
     <div className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
-      {/* top accent stripe */}
       <div className={`h-1.5 w-full ${accentMap[dog.accent]}`} />
 
       <div className="p-5">
-        {/* header */}
         <div className="flex items-start gap-4">
           <div className="relative">
             <img
@@ -59,12 +68,38 @@ export function DogCard({ dog }: { dog: Dog }) {
             </div>
           </div>
 
-          <button className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted">
-            <MoreVertical size={18} />
-          </button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <button
+                aria-label={`More options for ${dog.name}`}
+                className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              >
+                <MoreVertical size={18} />
+              </button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="w-44 rounded-xl">
+              <DropdownMenuItem
+                className="cursor-pointer rounded-lg font-semibold"
+                onSelect={() => navigate({ to: "/dogs/$dogId/edit", params: { dogId: dog.id } })}
+              >
+                <Pencil size={16} className="text-trust" />
+                Edit dog
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                className="cursor-pointer rounded-lg font-semibold text-destructive focus:text-destructive"
+                onSelect={(e) => {
+                  e.preventDefault();
+                  setConfirmOpen(true);
+                }}
+              >
+                <Trash2 size={16} />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
 
-        {/* progress */}
         <div className="mt-5">
           <div className="mb-1.5 flex items-baseline justify-between">
             <span className="text-xs font-bold text-muted-foreground">
@@ -75,7 +110,6 @@ export function DogCard({ dog }: { dog: Dog }) {
           <Progress value={pct} className="h-2.5" />
         </div>
 
-        {/* stats */}
         <div className="mt-4 space-y-1.5 text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
             <BarChart3 size={14} className="text-trust" />
@@ -89,16 +123,35 @@ export function DogCard({ dog }: { dog: Dog }) {
           </div>
         </div>
 
-        {/* actions */}
         <div className="mt-5 flex gap-2">
           <Button className="flex-1" size="default">
             Start Training
           </Button>
-          <Button variant="outline" className="flex-1 border-trust text-trust hover:bg-trust hover:text-trust-foreground" size="default">
-            View Progress
+          <Button asChild variant="outline" className="flex-1 border-trust text-trust hover:bg-trust hover:text-trust-foreground" size="default">
+            <Link to="/dogs/$dogId/edit" params={{ dogId: dog.id }}>View Progress</Link>
           </Button>
         </div>
       </div>
+
+      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
+        <AlertDialogContent className="rounded-3xl">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Remove {dog.name} from your pack?</AlertDialogTitle>
+            <AlertDialogDescription>
+              This will permanently delete {dog.name}'s training history and progress. This action cannot be undone.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
+            <AlertDialogAction
+              className="rounded-xl bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              onClick={() => dogsStore.remove(dog.id)}
+            >
+              Yes, delete
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </div>
   );
 }
