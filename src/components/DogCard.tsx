@@ -1,27 +1,8 @@
-import { MoreVertical, Clock, BarChart3, Sparkles, Pencil, Trash2 } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { Clock, BarChart3, Sparkles, Pencil } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import type { Dog } from "@/data/dogs-store";
-import { dogsStore } from "@/data/dogs-store";
 
 export type { Dog };
 
