@@ -73,30 +73,16 @@ export function Dashboard() {
   });
 
   return (
-    <div className="relative min-h-screen bg-background pb-16">
+    <div className="relative min-h-screen bg-background pb-28">
       <FloatingPaws />
 
-      {/* Header */}
+      {/* Header (clean, no logo) */}
       <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-md">
-              <DogIcon size={22} strokeWidth={2.5} />
-            </div>
-            <div className="leading-tight">
-              <div className="text-base font-black text-foreground">PawSchool</div>
-              <div className="hidden text-[11px] font-semibold text-muted-foreground sm:block">
-                Train smart, treat often
-              </div>
-            </div>
-          </div>
-
+          <div className="text-sm font-bold text-muted-foreground">Dashboard</div>
           <div className="flex items-center gap-1.5">
-            <button className="hidden h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition hover:bg-muted sm:flex">
+            <button className="flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition hover:bg-muted">
               <Bell size={20} />
-            </button>
-            <button className="hidden h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition hover:bg-muted sm:flex">
-              <Settings size={20} />
             </button>
             <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-trust shadow-md ring-2 ring-card" />
           </div>
@@ -217,18 +203,8 @@ export function Dashboard() {
           </ul>
         </section>
 
-        {/* Footer */}
-        <footer className="mt-10 flex flex-col items-center justify-between gap-3 border-t border-border pt-6 text-xs font-medium text-muted-foreground sm:flex-row">
-          <div className="flex items-center gap-4">
-            <a href="#" className="flex items-center gap-1 hover:text-foreground"><HelpCircle size={12} /> FAQ</a>
-            <a href="#" className="hover:text-foreground">Settings</a>
-            <a href="#" className="hover:text-foreground">Help</a>
-          </div>
-          <button className="flex items-center gap-1.5 hover:text-soft-error">
-            <LogOut size={12} /> Log out
-          </button>
-        </footer>
       </main>
+      <BottomNav />
     </div>
   );
 }
