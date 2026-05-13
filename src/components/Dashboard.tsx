@@ -110,7 +110,7 @@ export function Dashboard() {
         {filtered.length > 0 ? (
           <section className="mt-5 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
             {filtered.map((d) => (
-              <DogCard key={d.name} dog={d} />
+              <DogCard key={d.id} dog={d} />
             ))}
           </section>
         ) : (
