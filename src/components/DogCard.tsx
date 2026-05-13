@@ -1,27 +1,8 @@
-import { MoreVertical, Clock, BarChart3, Sparkles, Pencil, Trash2 } from "lucide-react";
-import { Link, useNavigate } from "@tanstack/react-router";
-import { useState } from "react";
+import { Clock, BarChart3, Sparkles, Pencil } from "lucide-react";
+import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-} from "@/components/ui/alert-dialog";
 import type { Dog } from "@/data/dogs-store";
-import { dogsStore } from "@/data/dogs-store";
 
 export type { Dog };
 
@@ -33,8 +14,6 @@ const accentMap = {
 
 export function DogCard({ dog }: { dog: Dog }) {
   const pct = Math.round((dog.xp / dog.xpMax) * 100);
-  const navigate = useNavigate();
-  const [confirmOpen, setConfirmOpen] = useState(false);
 
   return (
     <div className="group relative overflow-hidden rounded-3xl border border-border bg-card shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl">
@@ -68,36 +47,14 @@ export function DogCard({ dog }: { dog: Dog }) {
             </div>
           </div>
 
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button
-                aria-label={`More options for ${dog.name}`}
-                className="flex h-8 w-8 items-center justify-center rounded-lg text-muted-foreground transition hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              >
-                <MoreVertical size={18} />
-              </button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="w-44 rounded-xl">
-              <DropdownMenuItem
-                className="cursor-pointer rounded-lg font-semibold"
-                onSelect={() => navigate({ to: "/dogs/$dogId/edit", params: { dogId: dog.id } })}
-              >
-                <Pencil size={16} className="text-trust" />
-                Edit dog
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                className="cursor-pointer rounded-lg font-semibold text-destructive focus:text-destructive"
-                onSelect={(e) => {
-                  e.preventDefault();
-                  setConfirmOpen(true);
-                }}
-              >
-                <Trash2 size={16} />
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <Link
+            to="/dogs/$dogId/edit"
+            params={{ dogId: dog.id }}
+            aria-label={`Edit ${dog.name}`}
+            className="flex h-9 w-9 items-center justify-center rounded-xl text-muted-foreground transition hover:bg-muted hover:text-trust focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            <Pencil size={16} />
+          </Link>
         </div>
 
         <div className="mt-5">
@@ -132,26 +89,7 @@ export function DogCard({ dog }: { dog: Dog }) {
           </Button>
         </div>
       </div>
-
-      <AlertDialog open={confirmOpen} onOpenChange={setConfirmOpen}>
-        <AlertDialogContent className="rounded-3xl">
-          <AlertDialogHeader>
-            <AlertDialogTitle>Remove {dog.name} from your pack?</AlertDialogTitle>
-            <AlertDialogDescription>
-              This will permanently delete {dog.name}'s training history and progress. This action cannot be undone.
-            </AlertDialogDescription>
-          </AlertDialogHeader>
-          <AlertDialogFooter>
-            <AlertDialogCancel className="rounded-xl">Cancel</AlertDialogCancel>
-            <AlertDialogAction
-              className="rounded-xl bg-destructive text-destructive-foreground hover:bg-destructive/90"
-              onClick={() => dogsStore.remove(dog.id)}
-            >
-              Yes, delete
-            </AlertDialogAction>
-          </AlertDialogFooter>
-        </AlertDialogContent>
-      </AlertDialog>
     </div>
   );
 }
+
