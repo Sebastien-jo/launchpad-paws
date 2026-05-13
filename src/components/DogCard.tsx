@@ -81,11 +81,11 @@ export function DogCard({ dog }: { dog: Dog }) {
         </div>
 
         <div className="mt-5 flex gap-2">
-          <Button className="flex-1" size="default">
-            Start Training
+          <Button asChild className="flex-1" size="default">
+            <Link to="/dogs/$dogId/exercises" params={{ dogId: dog.id }}>Start Training</Link>
           </Button>
           <Button asChild variant="outline" className="flex-1 border-trust text-trust hover:bg-trust hover:text-trust-foreground" size="default">
-            <Link to="/dogs/$dogId/edit" params={{ dogId: dog.id }}>View Progress</Link>
+            <Link to="/dogs/$dogId/exercises" params={{ dogId: dog.id }}>View Progress</Link>
           </Button>
         </div>
       </div>
