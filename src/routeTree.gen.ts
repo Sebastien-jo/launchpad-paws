@@ -15,6 +15,7 @@ import { Route as LearnRouteImport } from './routes/learn'
 import { Route as GoalsRouteImport } from './routes/goals'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as DogsDogIdExercisesRouteImport } from './routes/dogs.$dogId.exercises'
 import { Route as DogsDogIdEditRouteImport } from './routes/dogs.$dogId.edit'
 
 const WorkspaceRoute = WorkspaceRouteImport.update({
@@ -47,6 +48,11 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DogsDogIdExercisesRoute = DogsDogIdExercisesRouteImport.update({
+  id: '/dogs/$dogId/exercises',
+  path: '/dogs/$dogId/exercises',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DogsDogIdEditRoute = DogsDogIdEditRouteImport.update({
   id: '/dogs/$dogId/edit',
   path: '/dogs/$dogId/edit',
@@ -61,6 +67,7 @@ export interface FileRoutesByFullPath {
   '/profile': typeof ProfileRoute
   '/workspace': typeof WorkspaceRoute
   '/dogs/$dogId/edit': typeof DogsDogIdEditRoute
+  '/dogs/$dogId/exercises': typeof DogsDogIdExercisesRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +77,7 @@ export interface FileRoutesByTo {
   '/profile': typeof ProfileRoute
   '/workspace': typeof WorkspaceRoute
   '/dogs/$dogId/edit': typeof DogsDogIdEditRoute
+  '/dogs/$dogId/exercises': typeof DogsDogIdExercisesRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +88,7 @@ export interface FileRoutesById {
   '/profile': typeof ProfileRoute
   '/workspace': typeof WorkspaceRoute
   '/dogs/$dogId/edit': typeof DogsDogIdEditRoute
+  '/dogs/$dogId/exercises': typeof DogsDogIdExercisesRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +100,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/workspace'
     | '/dogs/$dogId/edit'
+    | '/dogs/$dogId/exercises'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/workspace'
     | '/dogs/$dogId/edit'
+    | '/dogs/$dogId/exercises'
   id:
     | '__root__'
     | '/'
@@ -109,6 +120,7 @@ export interface FileRouteTypes {
     | '/profile'
     | '/workspace'
     | '/dogs/$dogId/edit'
+    | '/dogs/$dogId/exercises'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +131,7 @@ export interface RootRouteChildren {
   ProfileRoute: typeof ProfileRoute
   WorkspaceRoute: typeof WorkspaceRoute
   DogsDogIdEditRoute: typeof DogsDogIdEditRoute
+  DogsDogIdExercisesRoute: typeof DogsDogIdExercisesRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -165,6 +178,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dogs/$dogId/exercises': {
+      id: '/dogs/$dogId/exercises'
+      path: '/dogs/$dogId/exercises'
+      fullPath: '/dogs/$dogId/exercises'
+      preLoaderRoute: typeof DogsDogIdExercisesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dogs/$dogId/edit': {
       id: '/dogs/$dogId/edit'
       path: '/dogs/$dogId/edit'
@@ -183,6 +203,7 @@ const rootRouteChildren: RootRouteChildren = {
   ProfileRoute: ProfileRoute,
   WorkspaceRoute: WorkspaceRoute,
   DogsDogIdEditRoute: DogsDogIdEditRoute,
+  DogsDogIdExercisesRoute: DogsDogIdExercisesRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
