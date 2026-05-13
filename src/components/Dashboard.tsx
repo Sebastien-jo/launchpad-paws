@@ -76,19 +76,6 @@ export function Dashboard() {
     <div className="relative min-h-screen bg-background pb-28">
       <FloatingPaws />
 
-      {/* Header (clean, no logo) */}
-      <header className="sticky top-0 z-20 border-b border-border bg-background/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
-          <div className="text-sm font-bold text-muted-foreground">Dashboard</div>
-          <div className="flex items-center gap-1.5">
-            <button className="flex h-10 w-10 items-center justify-center rounded-xl text-muted-foreground transition hover:bg-muted">
-              <Bell size={20} />
-            </button>
-            <div className="h-10 w-10 rounded-2xl bg-gradient-to-br from-primary to-trust shadow-md ring-2 ring-card" />
-          </div>
-        </div>
-      </header>
-
       <main className="relative z-10 mx-auto max-w-6xl px-4 pt-6 sm:px-6">
         {/* Greeting */}
         <section className="animate-fade-in">
