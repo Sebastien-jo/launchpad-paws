@@ -41,9 +41,9 @@ export function DogCard({ dog }: { dog: Dog }) {
               {dog.name}
             </h3>
             <p className="text-sm font-medium text-muted-foreground">{dog.breed}</p>
-            <div className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-bold text-foreground">
+            <div className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-energy/20 to-primary/20 px-2 py-0.5 text-[11px] font-black uppercase tracking-wider text-foreground ring-1 ring-energy/40">
               <Sparkles size={10} className="text-energy" />
-              {dog.levelLabel}
+              Legacy · Lvl {dog.level}
             </div>
           </div>
 
