@@ -67,6 +67,28 @@ export function DogCard({ dog }: { dog: Dog }) {
           <Progress value={pct} className="h-2.5" />
         </div>
 
+        {/* Theme levels */}
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {([
+            { key: "indoor", label: "Indoor", Icon: Home, tone: "text-primary", bg: "bg-primary/10", ring: "ring-primary/30" },
+            { key: "outdoor", label: "Outdoor", Icon: Trees, tone: "text-energy", bg: "bg-energy/10", ring: "ring-energy/30" },
+            { key: "mental", label: "Mental", Icon: Brain, tone: "text-trust", bg: "bg-trust/10", ring: "ring-trust/30" },
+          ] as const).map(({ key, label, Icon, tone, bg, ring }) => (
+            <div
+              key={key}
+              className={`flex flex-col items-center gap-1 rounded-2xl ${bg} px-2 py-2.5 ring-1 ${ring}`}
+            >
+              <Icon size={16} className={tone} />
+              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                {label}
+              </span>
+              <span className={`text-base font-black leading-none ${tone}`}>
+                Lv {dog.themeLevels[key]}
+              </span>
+            </div>
+          ))}
+        </div>
+
         <div className="mt-4 space-y-1.5 text-sm">
           <div className="flex items-center gap-2 text-muted-foreground">
             <BarChart3 size={14} className="text-trust" />
