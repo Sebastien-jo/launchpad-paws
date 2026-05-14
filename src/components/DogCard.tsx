@@ -1,4 +1,4 @@
-import { Clock, BarChart3, Sparkles, Pencil } from "lucide-react";
+import { Clock, BarChart3, Sparkles, Pencil, Home, Trees, Brain } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -41,9 +41,9 @@ export function DogCard({ dog }: { dog: Dog }) {
               {dog.name}
             </h3>
             <p className="text-sm font-medium text-muted-foreground">{dog.breed}</p>
-            <div className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-bold text-foreground">
+            <div className="mt-1.5 inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-energy/20 to-primary/20 px-2 py-0.5 text-[11px] font-black uppercase tracking-wider text-foreground ring-1 ring-energy/40">
               <Sparkles size={10} className="text-energy" />
-              {dog.levelLabel}
+              Legacy · Lvl {dog.level}
             </div>
           </div>
 
@@ -65,6 +65,28 @@ export function DogCard({ dog }: { dog: Dog }) {
             <span className="text-xs font-extrabold text-foreground">{pct}%</span>
           </div>
           <Progress value={pct} className="h-2.5" />
+        </div>
+
+        {/* Theme levels */}
+        <div className="mt-4 grid grid-cols-3 gap-2">
+          {([
+            { key: "indoor", label: "Indoor", Icon: Home, tone: "text-primary", bg: "bg-primary/10", ring: "ring-primary/30" },
+            { key: "outdoor", label: "Outdoor", Icon: Trees, tone: "text-energy", bg: "bg-energy/10", ring: "ring-energy/30" },
+            { key: "mental", label: "Mental", Icon: Brain, tone: "text-trust", bg: "bg-trust/10", ring: "ring-trust/30" },
+          ] as const).map(({ key, label, Icon, tone, bg, ring }) => (
+            <div
+              key={key}
+              className={`flex flex-col items-center gap-1 rounded-2xl ${bg} px-2 py-2.5 ring-1 ${ring}`}
+            >
+              <Icon size={16} className={tone} />
+              <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
+                {label}
+              </span>
+              <span className={`text-base font-black leading-none ${tone}`}>
+                Lv {dog.themeLevels[key]}
+              </span>
+            </div>
+          ))}
         </div>
 
         <div className="mt-4 space-y-1.5 text-sm">
