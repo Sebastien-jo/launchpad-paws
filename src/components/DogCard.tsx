@@ -1,4 +1,4 @@
-import { Clock, BarChart3, Sparkles, Pencil } from "lucide-react";
+import { Clock, BarChart3, Sparkles, Pencil, Home, Trees, Brain } from "lucide-react";
 import { Link } from "@tanstack/react-router";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
